@@ -17,11 +17,15 @@ def concatTxt(originalTxt, newTxt, headTail=True):
     return targetCodes
 
 def replaceAllTxt(txt, replacedTable):
+    """
+    replacedTable: dict
+    """
     for replacedObj, replacedValue in replacedTable.items():
-        txt = txt.replace(replacedObj, replacedValue)
+        # txt = txt.replace(replacedObj, replacedValue)
+        txt = re.sub(replacedObj, replacedValue, txt, count=0)
     return txt
 
-def textReplaceWithPattern(txt, textReplacePattern, insertedText, count=1):
+def textReplaceWithPattern__discard(txt, textReplacePattern, insertedText, count=1):
     """
     :param txt: text being process
     :param textReplacePattern: pattern being replaced

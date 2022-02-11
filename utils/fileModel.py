@@ -58,17 +58,20 @@ def read_text(main_path, file_name):
         txt = f.read()
     return txt
 
-def readAllTxtFiles(fileDir):
+def readAllTxtFiles(fileDir, outFormat=dict):
     """
     :param fileDir: str
     :return: {}
     """
-    texts = {}
+    output = outFormat() # define the init data type
     listFiles = os.listdir(fileDir)
     for fileName in listFiles:
         with open(os.path.join(fileDir, fileName), 'r') as f:
-            texts[fileName] = f.read()
-    return texts
+            if outFormat == dict:
+                output[fileName] = f.read()
+            elif outFormat == str:
+                output += f.read() + '\n'
+    return output
 
 def writeAllTxtFiles(main_path, texts):
     """
