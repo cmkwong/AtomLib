@@ -2,26 +2,6 @@ import pandas as pd
 import os
 from utils import listModel
 
-def transfer_all_xlsx_to_csv(main_path):
-    """
-    note 84d
-    :param main_path: str, the xlsx files directory
-    :return:
-    """
-    files = getFileList(main_path, reverse=False)
-    for file in files:
-        # read excel file
-        excel_full_path = os.path.join(main_path, file)
-        print("Reading the {}".format(file))
-        df = pd.read_excel(excel_full_path, header=None)
-
-        # csv file name
-        csv_file = file.split('.')[0] + '.csv'
-        csv_full_path = os.path.join(main_path, csv_file)
-        print("Writing the {}".format(csv_file))
-        df.to_csv(csv_full_path, encoding='utf-8', index=False, header=False)
-    return True
-
 def getFileList(pathDir, reverse=False):
     required_fileNames = []
     listFiles = os.listdir(pathDir)
@@ -64,13 +44,13 @@ def readAllTxtFiles(fileDir, outFormat=dict):
     :return: {}
     """
     output = outFormat() # define the init data type
-    listFiles = os.listdir(fileDir)
-    for fileName in listFiles:
-        with open(os.path.join(fileDir, fileName), 'r') as f:
-            if outFormat == dict:
-                output[fileName] = f.read()
-            elif outFormat == str:
-                output += f.read() + '\n'
+    for curPath, directories, files in os.walk(fileDir): # deep walk
+        for file in files:
+            with open(os.path.join(curPath, file), 'r') as f:
+                if outFormat == dict:
+                    output[file] = f.read()
+                elif outFormat == str:
+                    output += f.read() + '\n'
     return output
 
 def writeAllTxtFiles(main_path, texts):

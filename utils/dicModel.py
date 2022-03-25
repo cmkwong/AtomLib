@@ -28,6 +28,7 @@ def keepDic(originDict, keepList):
             newDict[key] = value
     return newDict
 
+# duplicated function with append_dictValues_into_text()
 def dic2Txt(dicts):
     """
     concat the dict value (text) into one text format
@@ -35,4 +36,9 @@ def dic2Txt(dicts):
     txt = ''
     for key, value in dicts.items():
         txt += value + '\n'
+    return txt
+
+def append_dictValues_into_text(dic, txt=''):
+    values = list(dic.values())
+    txt += ','.join([str(value) for value in values]) + '\n'
     return txt

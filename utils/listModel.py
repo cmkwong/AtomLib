@@ -30,3 +30,9 @@ def filterList(els, pattern):
         if re.search(pattern, el):
             required_els.append(el)
     return required_els
+
+def shift_list(lst, s):
+    s %= len(lst)
+    s *= -1
+    shifted_lst = lst[s:] + lst[:s]
+    return shifted_lst

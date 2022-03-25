@@ -33,3 +33,23 @@ def xlsx2csv(main_path):
         print("Writing the {}".format(csv_file))
         df.to_csv(csv_full_path, encoding='utf-8', index=False, header=False)
     return True
+
+def transfer_all_xlsx_to_csv(main_path):
+    """
+    note 84d
+    :param main_path: str, the xlsx files directory
+    :return:
+    """
+    files = fileModel.getFileList(main_path, reverse=False)
+    for file in files:
+        # read excel file
+        excel_full_path = os.path.join(main_path, file)
+        print("Reading the {}".format(file))
+        df = pd.read_excel(excel_full_path, header=None)
+
+        # csv file name
+        csv_file = file.split('.')[0] + '.csv'
+        csv_full_path = os.path.join(main_path, csv_file)
+        print("Writing the {}".format(csv_file))
+        df.to_csv(csv_full_path, encoding='utf-8', index=False, header=False)
+    return True
