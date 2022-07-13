@@ -6,7 +6,7 @@ def paramPreprocess(input_data, param):
         required_input_data = input_data.split(' ')
         if len(input_data) == 0: required_input_data = []
     elif type(input_data) != param.annotation:
-            required_input_data = param.annotation(input_data)
+            required_input_data = param.annotation(input_data) # __new__, refer: https://www.pythontutorial.net/python-oop/python-__new__/
     else:
         required_input_data = input_data
     return required_input_data

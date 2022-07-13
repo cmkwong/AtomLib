@@ -58,14 +58,14 @@ class StockValidator:
 
                 if (action_idx == self.env._state.actions['open']) and not self.have_position:
                     self.openPos_price = self.curr_action_price
-                    # store the data
+                    # store the loader
                     self.update_df_open()
 
                 elif (action_idx == self.env._state.actions['close']) and self.have_position:
                     self.order_profits = self.env._state.cal_profit(self.openPos_price, self.env._state.quote_exchg[self.env._state._offset])
                     self.stats['order_profits'].append(self.order_profits)
                     self.stats['order_steps'].append(self.order_steps)
-                    # store the data
+                    # store the loader
                     self.update_df_close(episode)
 
                     # reset the value
@@ -82,7 +82,7 @@ class StockValidator:
                         self.stats['order_profits'].append(self.order_profits)
                         self.stats['order_steps'].append(self.order_steps)
 
-                        # store the data (have not sell yet but reached end-date)
+                        # store the loader (have not sell yet but reached end-date)
                         self.update_df_close(episode)
                     break
             self.stats['episode_reward'].append(self.episode_reward)

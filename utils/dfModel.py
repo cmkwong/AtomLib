@@ -35,7 +35,7 @@ def transferColsType(df, cols, type):
     """
     :param df: dataframe
     :param cols: col name, not accept index
-    :param type: data type, float, int, etc
+    :param type: loader type, float, int, etc
     :return:
     """
     for col in cols:

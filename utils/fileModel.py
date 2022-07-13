@@ -43,10 +43,10 @@ def readAllTxtFiles(fileDir, outFormat=dict):
     :param fileDir: str
     :return: {}
     """
-    output = outFormat() # define the init data type
+    output = outFormat() # define the init loader type
     for curPath, directories, files in os.walk(fileDir): # deep walk
         for file in files:
-            with open(os.path.join(curPath, file), 'r') as f:
+            with open(os.path.join(curPath, file), 'r', encoding='UTF-8') as f:
                 if outFormat == dict:
                     output[file] = f.read()
                 elif outFormat == str:
