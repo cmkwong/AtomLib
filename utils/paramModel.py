@@ -1,5 +1,6 @@
 import inspect
 from utils import fileModel
+from dataclasses import dataclass
 
 def paramPreprocess(input_data, param):
     if param.annotation == list:
@@ -26,16 +27,32 @@ def input_param(param, strategy_param_dict):
         input_data = strategy_param_dict[param.name]
     return input_data
 
-def ask_params(class_object, main_path, paramFile):
+def ask_params(class_object, main_path:str, paramFile:str):
     # read the default params text
     strategy_param_dict = read_default_param(class_object.__name__, main_path, paramFile)
 
-    # asking the params
+    # params details from object
     sig = inspect.signature(class_object)
     params = {}
     for param in sig.parameters.values():
         if (param.kind == param.KEYWORD_ONLY) and (param.default == param.empty):
-            input_data = input_param(param, strategy_param_dict)
+            input_data = input_param(param, strategy_param_dict) # asking params
             input_data = paramPreprocess(input_data, param)
+            params[param.name] = input_data
+    return params
+
+def insert_params(class_object, input_datas:list):
+    """
+    inputParams and class_object must have same order and length
+    :param class_object: class
+    :param inputParams: list of input parameters
+    :return: {params}
+    """
+    # params details from object
+    sig = inspect.signature(class_object)
+    params = {}
+    for i, param in enumerate(sig.parameters.values()):
+        if (param.kind == param.KEYWORD_ONLY) and (param.default == param.empty):
+            input_data = paramPreprocess(input_datas[i], param)
             params[param.name] = input_data
     return params

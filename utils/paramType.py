@@ -1,6 +1,6 @@
 import re
 
-class SymbolList(object):
+class SymbolList(list):
     @staticmethod
     def get_default_text():
         return """
