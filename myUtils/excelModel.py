@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-from utils import dicModel, listModel, dfModel, fileModel
+from myUtils import dicModel, listModel, DfModel, fileModel
 
 def readExcel(path, required_sheets, concat=True):
     dfs = pd.read_excel(path, sheet_name=None, header=1)
@@ -11,7 +11,7 @@ def readExcel(path, required_sheets, concat=True):
         if sheet_name.lower() in dfs.keys():   # check if required sheet in excel file
             required_dfs[sheet_name] = dfs[sheet_name]
     if concat:
-        return dfModel.concatDfs(required_dfs)
+        return DfModel.concatDfs(required_dfs)
     return required_dfs
 
 def xlsx2csv(main_path):

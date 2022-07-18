@@ -1,5 +1,5 @@
 import inspect
-from utils import fileModel
+from myUtils import fileModel
 from dataclasses import dataclass
 
 def paramPreprocess(input_data, param):
@@ -52,7 +52,7 @@ def insert_params(class_object, input_datas:list):
     sig = inspect.signature(class_object)
     params = {}
     for i, param in enumerate(sig.parameters.values()):
-        if (param.kind == param.KEYWORD_ONLY) and (param.default == param.empty):
+        if (param.kind == param.KEYWORD_ONLY): #  and (param.default == param.empty)
             input_data = paramPreprocess(input_datas[i], param)
             params[param.name] = input_data
     return params

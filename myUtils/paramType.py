@@ -1,4 +1,5 @@
 import re
+from datetime import date, datetime
 
 class SymbolList(list):
     @staticmethod
@@ -14,6 +15,18 @@ class SymbolList(list):
         seq = text.strip().split(' ')
         symbols = [str(s) for s in seq]
         return symbols
+
+class DatetimeTuple(object):
+    @staticmethod
+    def __new__(cls, inputDate):
+        """
+        :param inputDate: tuple/date
+        """
+        if isinstance(inputDate, date):
+            return (inputDate.year, inputDate.month, inputDate.day, 0, 0) # (year, month, day, hour, minute)
+        if isinstance(inputDate, datetime):
+            return (inputDate.year, inputDate.month, inputDate.day, inputDate.hour, inputDate.minute) # (year, month, day, hour, minute)
+        return inputDate
 
 class InputBoolean(object):
     @staticmethod
