@@ -86,7 +86,7 @@ class DfModel:
     def df2ListDict(self, df:pd.DataFrame):
         """
         :param df: pd.DataFrame
-        :return: [{data, ...}]
+        :return: [{Data, ...}]
         """
         return df.to_dict('records')
 

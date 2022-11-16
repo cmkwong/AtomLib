@@ -13,3 +13,10 @@ def loss_status(writer, loss, episode, mode='train'):
     """
     writer.add_scalar("{}-episode_loss".format(mode), loss, episode)
     print("{}. {} loss: {:.6f}".format(episode, mode, loss))
+
+def print_at(txt, tg=None, print_allowed=True, reply_markup=None):
+    if print_allowed:
+        if tg == None:
+            print(txt)
+        else:
+            tg.bot.send_message(tg.chat_id, txt, reply_markup=reply_markup)
