@@ -137,3 +137,11 @@ def df2ListDict(df: pd.DataFrame):
     :return: [{Data, ...}]
     """
     return df.to_dict('records')
+
+# split the dataframe by rows
+def split_df(df, percentage):
+    split_index = int(len(df) * percentage)
+    upper_df = df.iloc[:split_index,:]
+    lower_df = df.iloc[split_index:, :]
+    return upper_df, lower_df
+
