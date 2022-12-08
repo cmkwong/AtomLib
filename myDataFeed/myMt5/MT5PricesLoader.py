@@ -6,7 +6,8 @@ from myUtils import dfModel
 
 import collections
 
-from myUtils.paramType import SymbolList, DatetimeTuple
+from myUtils.paramModel import SymbolList, DatetimeTuple
+
 
 # Mt5f loader price loader
 class MT5PricesLoader(BaseMT5PricesLoader):  # created note 86a
