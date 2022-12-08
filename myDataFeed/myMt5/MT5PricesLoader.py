@@ -1,5 +1,5 @@
-from myDataFeed.myMt5 import BaseMT5PricesLoader
-from myDataFeed.myMt5 import InitPrices
+from myDataFeed.myMt5.BaseMT5PricesLoader import BaseMT5PricesLoader
+from myDataFeed.myMt5.InitPrices import InitPrices
 
 from myBacktest import exchgModel, pointsModel
 from myUtils import dfModel
@@ -8,16 +8,10 @@ import collections
 
 from myUtils.paramType import SymbolList, DatetimeTuple
 
-
-# from dataclasses import dataclass, field
-# from typing import List, Tuple, Dict
-# from Tkinter.TkWidget import TkWidgetLabel
-# from Tkinter.TkInitWidget import TkInitWidget
-
-
 # Mt5f loader price loader
 class MT5PricesLoader(BaseMT5PricesLoader):  # created note 86a
     def __init__(self, all_symbol_info, timezone='Hongkong', deposit_currency='USD'):
+        super(MT5PricesLoader, self).__init__()
         self.all_symbol_info = all_symbol_info
 
         # for Mt5f
