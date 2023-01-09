@@ -1,4 +1,3 @@
-from mt5Server.codes import config
 from datetime import datetime, timedelta
 import MetaTrader5 as mt5
 import pytz
@@ -30,45 +29,27 @@ def get_timeframe2txt(mt5_timeframe_txt):
     return timeframe_ptext_dicts[mt5_timeframe_txt]
 
 
-def get_utc_time_from_broker(time, timezone):
+def get_utc_time_from_broker(time, timezone, broker_time_between_utc):
     """
     :param time: tuple (year, month, day, hour, mins) eg: (2010, 10, 30, 0, 0)
     :param timezone: Check: set(pytz.all_timezones_set) - (Etc/UTC)
     :return: datetime format
     """
-    dt = datetime(time[0], time[1], time[2], hour=time[3], minute=time[4]) + timedelta(hours=config.BROKER_TIME_BETWEEN_UTC, minutes=0)
+    dt = datetime(time[0], time[1], time[2], hour=time[3], minute=time[4]) + timedelta(hours=broker_time_between_utc, minutes=0)
     utc_time = pytz.timezone(timezone).localize(dt)
     return utc_time
 
 
-def get_current_utc_time_from_broker(timezone):
+def get_current_utc_time_from_broker(timezone, broker_time_between_utc):
     """
     :param time: tuple (year, month, day, hour, mins) eg: (2010, 10, 30, 0, 0)
     :param timezone: Check: set(pytz.all_timezones_set) - (Etc/UTC)
     :return: datetime format
     """
     now = datetime.today()
-    dt = datetime(now.year, now.month, now.day, hour=now.hour, minute=now.minute) + timedelta(hours=config.BROKER_TIME_BETWEEN_UTC, minutes=0)
+    dt = datetime(now.year, now.month, now.day, hour=now.hour, minute=now.minute) + timedelta(hours=broker_time_between_utc, minutes=0)
     utc_time = pytz.timezone(timezone).localize(dt)
     return utc_time
-
-
-def get_time_string(tt, format='yyyy-mm-dd-H-M'):
-    """
-    :param tt: time_tuple: tuple (yyyy,mm,dd,H,M)
-    :return: string
-    """
-    if format == 'yyyy-mm-dd-H-M':
-        time_string = str(tt[0]) + '-' + str(tt[1]).zfill(2) + '-' + str(tt[2]).zfill(2) + '-' + str(tt[3]).zfill(2) + '-' + str(tt[4]).zfill(2)
-    else:
-        time_string = str(tt[0]) + '-' + str(tt[1]).zfill(2) + '-' + str(tt[2]).zfill(2) + ' ' + str(tt[3]).zfill(2) + ':' + str(tt[4]).zfill(2) + ':' + '00'
-    return time_string
-
-
-def get_current_time_string():
-    now = datetime.today()
-    end_str = get_time_string((now.year, now.month, now.day, now.hour, now.minute))
-    return end_str
 
 # def get_action_date(df, signal):
 #     """

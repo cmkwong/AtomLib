@@ -1,14 +1,10 @@
-from myDataFeed.myNodeJs.NodejsServerController import NodejsServerController
-from myDataFeed.myMt5.MT5Controller import MT5Controller
-
+from myDataFeed.myNodeJs.ApiController import ApiController
 import pandas as pd
 
-
-class DataFeeder(NodejsServerController):
+class ServerController(ApiController):
     def __init__(self, mt5Controller):
-        super(DataFeeder, self).__init__()
-        self.mT5Controller = mt5Controller
-        self.defaultSymbols = ['AUDJPY', 'AUDCAD', 'AUDUSD', 'CADJPY', 'EURAUD', 'EURCAD', 'EURGBP', 'EURUSD', 'GBPUSD', 'USDCAD', 'USDJPY']
+        super(ServerController, self).__init__()
+        self.mt5Controller = mt5Controller
 
     # upload data
     def uploadDatas(self, symbols, startTime=(2022, 8, 31, 0, 0), endTime=(2022, 10, 27, 0, 0)):
@@ -19,7 +15,7 @@ class DataFeeder(NodejsServerController):
         :return:
         """
         # getting data from MT5
-        Prices = self.mT5Controller.pricesLoader.getPrices(symbols=symbols, start=startTime, end=endTime, timeframe='1min', count=0, ohlcvs='111111')
+        Prices = self.mt5Controller.pricesLoader.getPrices(symbols=symbols, start=startTime, end=endTime, timeframe='1min', count=0, ohlcvs='111111')
         # process into dataframe
         dfs = Prices.getOhlcvsFromPrices(symbols)
         # get to upload the data to database

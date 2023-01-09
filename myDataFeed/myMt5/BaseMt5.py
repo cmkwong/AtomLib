@@ -4,7 +4,6 @@ import collections
 import pandas as pd
 from datetime import datetime, timedelta
 
-
 class BaseMt5:
     def __init__(self):
         self.timeframe_dict = {"M1": mt5.TIMEFRAME_M1, "M2": mt5.TIMEFRAME_M2, "M3": mt5.TIMEFRAME_M3, "M4": mt5.TIMEFRAME_M4,
@@ -16,6 +15,14 @@ class BaseMt5:
         self.connect_server()
         print("MetaTrader 5 is connected. ")
         self.all_symbol_info = self.get_all_symbols_info()
+
+    def print_terminal_info(self):
+        # request connection status and parameters
+        print(mt5.terminal_info())
+        # request account info
+        print(mt5.account_info())
+        # get loader on MetaTrader 5 version
+        print(mt5.version())
 
     def get_symbol_total(self):
         """

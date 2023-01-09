@@ -6,8 +6,9 @@ import pandas as pd
 from myBacktest import timeModel
 from myDataFeed.myMt5.BasePricesLoader import BasePricesLoader
 
-
 class BaseMT5PricesLoader(BasePricesLoader):
+    def __init__(self, broker_time_between_utc=2):
+        self.broker_time_between_utc = broker_time_between_utc  # default is 2
 
     def _get_symbol_info_tick(self, symbol):
         lasttick = mt5.symbol_info_tick(symbol)._asdict()
@@ -23,13 +24,13 @@ class BaseMT5PricesLoader(BasePricesLoader):
         :return: dataframe
         """
         timeframe = timeModel.get_txt2timeframe(timeframe)
-        utc_from = timeModel.get_utc_time_from_broker(start, timezone)
+        utc_from = timeModel.get_utc_time_from_broker(start, timezone, self.broker_time_between_utc)
         if end == None:  # if end is None, get the loader at current time
             now = datetime.today()
             now_tuple = (now.year, now.month, now.day, now.hour, now.minute)
-            utc_to = timeModel.get_utc_time_from_broker(now_tuple, timezone)
+            utc_to = timeModel.get_utc_time_from_broker(now_tuple, timezone, self.broker_time_between_utc)
         else:
-            utc_to = timeModel.get_utc_time_from_broker(end, timezone)
+            utc_to = timeModel.get_utc_time_from_broker(end, timezone, self.broker_time_between_utc)
         rates = mt5.copy_rates_range(symbol, timeframe, utc_from, utc_to)
         rates_frame = pd.DataFrame(rates, dtype=float)  # create DataFrame out of the obtained loader
         rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')  # convert time in seconds into the datetime format

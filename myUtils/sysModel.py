@@ -18,3 +18,13 @@ def getTargetPath(targetName):
 def thread_start(fn, *args):
     thread = threading.Thread(target=fn, args=args)
     thread.start()
+
+# find required path
+def find_required_path(path, target):
+    while(True):
+        head, tail = os.path.split(path)
+        if (len(tail) == 0): # cannot split anymore
+            return head
+        if tail == target:
+            return path
+        path = head

@@ -4,7 +4,7 @@ import pandas as pd
 from myBacktest import timeModel
 
 # upload the forex loader
-class NodejsServerController:
+class ApiController:
 
     def __init__(self):
         self.mainUrl = "http://localhost:3002/"
